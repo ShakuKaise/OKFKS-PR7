@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h1>Book List</h1>
+        <form method="get" action="{% url 'book_list' %}">
+            <div class="form-group">
+                <label for="genre">Filter by Genre:</label>
+                <select class="form-control" id="genre" name="genre">
+                    <option value="" {% if not selected_genre %}selected{% endif %}>All Genres</option>
+                    {% for genre in genres %}
+                    <option value="{{ genre.id }}" {% if selected_genre == genre.id %}selected{% endif %}>{{ genre.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="author">Filter by Author:</label>
+                <select class="form-control" id="author" name="author">
+                    <option value="" {% if not selected_author %}selected{% endif %}>All Authors</option>
+                    {% for author in authors %}
+                    <option value="{{ author.id }}" {% if selected_author == author.id %}selected{% endif %}>{{ author.first_name }} {{ author.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply Filters</button>
+        </form>
+        <div class="row">
+            {% for book in books %}
+            <div class="col-md-6">
+                <div class="card mb-4 box-shadow">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img class="card-img" src="{{ book.cover_url }}" alt="{{ book.title }}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.title }}</h5>
+                                <p class="card-text">{{ book.author.first_name }} {{ book.author.last_name }}</p>
+                                <p class="card-text">{{ book.genre.name }}</p>
+                                <form method="post" action="{% url 'rent_book' book.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary">Rent Book</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <a class="btn btn-outline-success" href="{% url 'home' %}" role="button">Вернуться на главную</a>
+                <a class="btn btn-outline-success" href="{% url 'add_book' %}">Создать</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

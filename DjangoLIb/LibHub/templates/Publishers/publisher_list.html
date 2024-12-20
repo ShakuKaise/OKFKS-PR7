@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Список издателей</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Название издателя</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for publisher in publishers %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ publisher.name }}</td>
+                <td class="text-center">
+                    <a href="{% url 'publisher_update' publisher.id %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <form method="post" action="{% url 'publisher_delete' publisher.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">Издателей пока нет.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'publisher_create' %}" class="btn btn-success">Добавить издателя</a>
+    </div>
+</div>
+{% endblock %}

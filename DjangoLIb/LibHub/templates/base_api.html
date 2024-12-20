@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" integrity="sha512-tdy4CsA4/P6Ie+UqIpXlsVsZTd/uP2hZV1RlaO2ea8GbWk3dYn/ir5Z0f2b/mEwFTc6pPZ5JowIbmXYDw8/vMw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0; /* Убрать внешние отступы */
+            font-family: 'Arial', sans-serif; /* Заменить на ваш шрифт */
+        }
+
+        header, footer {
+            background-color: #343a40; /* Цвет фона заголовка и подвала */
+            color: #ffffff; /* Цвет текста заголовка и подвала */
+            padding: 1rem; /* Внутренние отступы заголовка и подвала */
+        }
+
+        .content {
+            flex: 1;
+            padding: 1rem; /* Внутренние отступы контента */
+        }
+
+        footer {
+            text-align: center; /* Выравнивание текста по центру */
+        }
+
+        .navbar {
+            background-color: #343a40; /* Цвет фона навигационной панели */
+            padding: 0.5rem; /* Внутренние отступы навигационной панели */
+        }
+
+        .navbar-brand {
+            color: #ffffff; /* Цвет текста логотипа */
+            font-size: 1.5rem; /* Размер шрифта логотипа */
+            font-weight: bold; /* Жирный шрифт логотипа */
+        }
+
+        .navbar-nav {
+            margin-left: auto; /* Переместить пункты навигации вправо */
+        }
+
+        .navbar-nav a {
+            color: #ffffff; /* Цвет текста ссылок навигации */
+            margin-right: 1rem; /* Внешний отступ справа для ссылок навигации */
+        }
+
+        .navbar-nav .btn {
+            margin-left: 1rem; /* Внешний отступ слева для кнопок в навигации */
+        }
+
+        .navbar-toggler-icon {
+            background-color: #ffffff; /* Цвет иконки бургер-меню */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        {% include 'Includes/_header.html' %}
+    </header>
+    <div class="content">
+        {% block nav %}
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        {% include 'Includes/_footer.html' %}
+    </footer>
+</body>
+</html>

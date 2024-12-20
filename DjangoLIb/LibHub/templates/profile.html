@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <div class="container">
+        <h1>User Profile</h1>
+        <h2>{{ user.email }}</h2>
+        <hr>
+        <h3>Rented Books</h3>
+
+        <div class="row">
+        {% for request in requests %}
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="{{ request.book.cover_url }}" alt="{{ request.book.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ request.book.name }}</h5>
+                    <p class="card-text">{% for author in request.book.authors.all %}{{ author.first_name }} {{ author.last_name }} {% endfor %}</p>
+                    <p class="card-text">{% for genre in request.book.genres.all %}{{ genre.name }} {% endfor %}</p>
+                    <form method="post" action="{% url 'return_book' request.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Return Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        {% if user.is_staff %}
+            <hr>
+            <h3>Admin Actions</h3>
+            <a href="{% url 'backup_database' %}" class="btn btn-warning">Создание бэкапа</a>
+            <a href="{% url 'restore_database' %}" class="btn btn-warning">Загрузка бэкапа</a>
+            <a href="{% url 'rented_books_statistics' %}" class="btn btn-warning">Статистика аренд</a>
+        {% endif %}
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

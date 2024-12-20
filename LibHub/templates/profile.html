@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <div class="container">
+        <h1>User Profile</h1>
+        <h2>{{ user.email }}</h2>
+        {% if request.user.is_superuser %}
+            <h4>
+            <a href="{% url 'export_books' %}">EXPORT</a>
+            </h4>
+        {% endif %}
+        <h3>Rented Books</h3>
+        <div class="row">
+            {% for book in rented_books %}
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <img class="card-img-top" src="{{ book.book.cover_url }}" alt="{{ book.book.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.book.title }}</h5>
+                        <p class="card-text">{{ book.book.description }}</p>
+                        <form method="post" action="{% url 'return_book' book.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Return Book</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

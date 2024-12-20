@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Список запросов</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Пользователь</th>
+                <th>Книга</th>
+                <th>Дата начала аренды</th>
+                <th>Дата конца аренды</th>
+                <th>Статус</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ request.user }}</td>
+                <td>{{ request.book }}</td>
+                <td>{{ request.borrow_date }}</td>
+                <td>{{ request.return_date }}</td>
+                <td>{{ request.status }}</td>
+                <td class="text-center">
+                    <a href="{% url 'request_update' request.id %}" class="btn btn-warning btn-sm">Редактировать</a>
+                    <form method="post" action="{% url 'request_delete' request.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">Запросов пока нет.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'request_create' %}" class="btn btn-success">Добавить запрос</a>
+    </div>
+</div>
+{% endblock %}
