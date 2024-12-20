@@ -3,7 +3,9 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from LibHub import views as v
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from drf_spectacular.views import (SpectacularAPIView,
+                                   SpectacularSwaggerView,
+                                   SpectacularRedocView)
 
 # Router definitions
 routerUser = routers.DefaultRouter()
@@ -25,13 +27,15 @@ routerLanguage = routers.DefaultRouter()
 routerLanguage.register('languages', v.LanguageViewSet, basename='language')
 
 routerPublisher = routers.DefaultRouter()
-routerPublisher.register('publishers', v.PublisherViewSet, basename='publisher')
+routerPublisher.register('publishers', v.PublisherViewSet,
+                         basename='publisher')
 
 routerComment = routers.DefaultRouter()
 routerComment.register('comments', v.CommentViewSet, basename='comment')
 
 routerEvaluation = routers.DefaultRouter()
-routerEvaluation.register('evaluations', v.EvaluationViewSet, basename='evaluation')
+routerEvaluation.register('evaluations', v.EvaluationViewSet,
+                          basename='evaluation')
 
 # URL patterns configuration
 api_patterns = [
